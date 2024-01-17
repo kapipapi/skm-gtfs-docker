@@ -1,0 +1,15 @@
+version: '3'
+services:
+  app:    
+    container_name: skmapp
+    build:
+      context: .
+      dockerfile: Dockerfile
+      
+  tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=eyJhIjoiNTM1YjNlZDIwNWE3ZDJiZDc5MDEzN2EwM2RlNTY3ODkiLCJ0IjoiYmJjYWQwYWItYzNhNC00NmJlLTlkNTAtMzRmN2M2Yjg3NjcyIiwicyI6Ik4yUTBaR016T0RJdE56a3pNaTAwTXpZMUxXSmlaVEl0WXpRM1ptVmhZVEJtT1RVeCJ9

@@ -3,7 +3,7 @@ import sys
 import os
 from datetime import datetime, timedelta
 
-def download(url, filename):
+def download(url, filename) -> bool:
     if os.path.exists(filename):
         file_creation_time = datetime.fromtimestamp(os.path.getctime(filename))
         if datetime.now() - file_creation_time > timedelta(hours=24):
@@ -11,7 +11,7 @@ def download(url, filename):
             os.remove(filename)
         else:
             print("File was created less than 24h ago, using cached version")
-            return
+            return False
 
     response = requests.get(url, stream=True)
     total_length = response.headers.get('content-length')
@@ -29,3 +29,5 @@ def download(url, filename):
             done = int(50 * dl / total_length)
             sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50-done)) )    
             sys.stdout.flush()
+
+    return True
